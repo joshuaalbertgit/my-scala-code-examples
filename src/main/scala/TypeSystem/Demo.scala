@@ -2,6 +2,8 @@ package TypeSystem
 
 object Demo extends App {
 
+  println("test git ignore")
+
   class Amount (value: Int, currency: String)
   val fiveDollars = new Amount(5, "USD")
   println(fiveDollars)//it prints TypeSystem.Demo$Amount@1e4cb85
