@@ -1,8 +1,6 @@
 package akkasamples
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
-import com.sun.xml.internal.ws.resources.SenderMessages
-
 
 object AkkaExamples extends  App {
   println("hello")
