@@ -9,17 +9,13 @@ object SampleFuture extends App {
 
   val currentTime = System.currentTimeMillis()
 
-  //Future a sure retun on a fucntion or method
-
+  //Future a sure return on a function or method
 
   val getCurrentTime = Future {
     currentTime
   }
 
-
-
   val result = Await.result(getCurrentTime, 1 second)
   println(result)
-
   wait(2000)
 }
