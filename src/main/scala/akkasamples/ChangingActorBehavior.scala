@@ -8,13 +8,9 @@ import akka.actor.{Actor, ActorRef, ActorSystem, Props}
  */
 object ChangingActorBehavior extends App {
 
-
-
-
-
   //kid is happy, when getting chocolate
   //is sad, when getting vegetable
-  object kid{
+  object Kid{
     val HAPPY = "happy"
     val SAD = "sad"
     val GOOD_RESPONSE = "Am coming to play, mom!"
@@ -25,8 +21,8 @@ object ChangingActorBehavior extends App {
   }
 
   class Kid extends Actor {
-    import kid._
-    import mom._
+    import Kid._
+    import Mom._
 
     var state = HAPPY
 
@@ -37,16 +33,16 @@ object ChangingActorBehavior extends App {
         state = HAPPY
       case Ask(_) => {
         if (state == HAPPY)
-          sender() ! println(s"Given food: $CHOCOLATE; Kid's state:: $state; So, the kid says: ${kid.GOOD_RESPONSE}")
+          sender() ! println(s"Given food: $CHOCOLATE; Kid's state:: $state; So, the kid says: ${Kid.GOOD_RESPONSE}")
         else
-          sender() ! println(s"Given food: ${VEGETABLE}; Kid's state:: $state; So, the kid says: ${kid.BAD_RESPONSE}")
+          sender() ! println(s"Given food: ${VEGETABLE}; Kid's state:: $state; So, the kid says: ${Kid.BAD_RESPONSE}")
       }
     }
 
     }//end of class kid
 
   //mom need to send food (like chocolate or vegetable
-  object mom {
+  object Mom {
     case class Food (food: String)
     case class Ask (msg: String) //asking like, do you want to play with mom?
     case class sendMessage (kidRef : ActorRef)
@@ -56,8 +52,8 @@ object ChangingActorBehavior extends App {
     val CHOCOLATE = "chocolate"
   }
   class Mom extends Actor{
-    import mom._
-    import kid._
+    import Mom._
+    import Kid._
 
     /**
      * When individual actor sending messgae, we going to do it via Mom's receive method
@@ -69,18 +65,21 @@ object ChangingActorBehavior extends App {
     override def receive: Receive = {
       case sendMessage (kidRef) => {
         kidRef ! Food(VEGETABLE)
+        kidRef ! Ask("Do you want to play?")
         kidRef ! Food(CHOCOLATE)
         kidRef ! Ask("Do you want to play?")
       }
     }
   }//end of mom class
-  import mom._
+  import Mom._
   //setup the actor system
   var system = ActorSystem("ActorBehaviour")
   var momActor = system.actorOf(Props[Mom],"momActor")
   var kidActor = system.actorOf(Props[Kid],"kidActor")
 
   momActor ! sendMessage (kidActor)
+
+  system.terminate()
 
 
 }
