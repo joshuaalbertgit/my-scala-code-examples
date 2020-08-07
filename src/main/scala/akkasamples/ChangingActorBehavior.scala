@@ -74,6 +74,8 @@ object ChangingActorBehavior extends App {
   import Mom._
   //setup the actor system
   var system = ActorSystem("ActorBehaviour")
+  val log = system.log
+  log.info("hi log!")
   var momActor = system.actorOf(Props[Mom],"momActor")
   var kidActor = system.actorOf(Props[Kid],"kidActor")
 

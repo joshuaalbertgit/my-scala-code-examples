@@ -47,10 +47,11 @@ object actorsamples extends  App {
     }
   }//end of class
   val personUpdatedActor = actorSystem.actorOf(personUpdated.props("Angline Joshua"))
-  personUpdatedActor ! "hi"
+  //personUpdatedActor ! "hi"
 
   val myres = personUpdatedActor ! "hi"
-  println(myres.toString)
+  println("received message ::" + myres.toString)
 
+  actorSystem.terminate()
 
 }
