@@ -126,6 +126,7 @@ object FunctionsAndMethods extends App {
 
   println("----")
   stockList.foreach(println(_))
+  stockList.foreach(a => println(a))
 
   val nameList = List("Joshua","Nathaniel", "Angeline", "Gratia")
   println(nameList)
@@ -144,4 +145,7 @@ object FunctionsAndMethods extends App {
 
   println(addTwoNums.apply(7,7))
   println(addThreeNums.apply(num2,56))
+
+  //function having function as parameter
+
 }
