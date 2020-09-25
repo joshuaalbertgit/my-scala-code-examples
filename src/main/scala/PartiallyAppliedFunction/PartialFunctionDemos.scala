@@ -73,11 +73,22 @@ object PartialFunctionDemos extends App {
 
   val someFunctionWithHOF2 = (parameter1: Int, hof: (Int, Int) => Int) => {
     println("---------------executing someFunctionWithHOF2")
-    hof(parameter1, parameter1)*hof(parameter1,parameter1)
+    hof(parameter1, parameter1)
     //println("after calling hof(parameter1, parameter1)")
   }
   val HOF2 = someFunctionWithHOF2(30,someFunction2)
   println(s"------------------HOF2 $HOF2")
+
+  val dummyFun1 = (a: Int) => a*a
+  val dumVal = dummyFun1(4)//calling a function
+  println(s"-----------calling a dummy function directly $dumVal")
+
+  //val dummyHOF1 = (a: Int, b: Int, c:Int) => a+b*c //inputs an int and returns the same
+  val dummyHOF1 = (a: Int, b: Int, innerHOF: Int => Int) => {
+    innerHOF(a+b)
+  }
+  val dumVal2 = dummyHOF1(5,5, dummyFun1)
+  println(s"-------calling a HOF $dumVal2")
 
 
 }
